@@ -176,6 +176,12 @@ module.exports = function (buffer) {
                             }
                             else{
                                 images.push(toImageData(image,frame));
+
+                                for(var key in anim){
+                                    if(images[key]==null){
+                                        images[key]= anim[key];
+                                    }
+                                }
                                 resolve();
                             }
                         });  
