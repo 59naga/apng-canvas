@@ -1,3 +1,18 @@
+(Experimental node.js version)apng-canvas v2.1.0
+==============
+```bash
+npm install 59naga/apng-canvas-parser fixture-images
+```
+```js
+var apngCanvasParser= require('apng-canvas-parser');
+
+var buffer= require('fixture-images').animated.png;
+apngCanvasParser(buffer).then(function(images){
+  console.log(images.length === 34);// true
+});
+```
+
+
 apng-canvas v2.1.0
 ==============
 
