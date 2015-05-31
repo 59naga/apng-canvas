@@ -1,5 +1,6 @@
 {
-  "name": "apng-canvas",
+  "name": "apng-canvas-parser",
+  "main": "src/parser.node.js",
   "version": "2.1.0",
   "author": "David Mzareulyan",
   "description": "Library for displaing animated PNG files in browsers with canvas support",
@@ -12,7 +13,8 @@
   "homepage": "https://github.com/davidmz/apng-canvas",
   "license": "MIT",
   "dependencies": {
-    "es6-promise": "latest"
+    "pngparse": "^2.0.1",
+    "bluebird": "^2.9.27"
   },
   "devDependencies": {
     "gulp": "latest",
