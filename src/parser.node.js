@@ -62,7 +62,7 @@ module.exports = function (buffer) {
 
     var bytes = new Uint8Array(buffer);
     return new Promise(function (result, reject) {
-        var t0 = performance.now();
+        // var t0 = performance.now();
         for (var i = 0; i < PNG_SIGNATURE_BYTES.length; i++) {
             if (PNG_SIGNATURE_BYTES[i] != bytes[i]) {
                 reject("Not a PNG file (invalid file signature)");
