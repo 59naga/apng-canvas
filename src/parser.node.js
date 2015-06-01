@@ -16,10 +16,12 @@ var toImageData= function(fakeImageData,frame){
     }
     imagedata.data.set(fakeImageData.data);
 
-    delete frame.dataParts
-    for(var key in frame){
-        if(imagedata[key]==null){
-            imagedata[key]= frame[key];
+    if(frame){
+        delete frame.dataParts
+        for(var key in frame){
+            if(imagedata[key]==null){
+                imagedata[key]= frame[key];
+            }
         }
     }
 
