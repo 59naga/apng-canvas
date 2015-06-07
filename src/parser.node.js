@@ -14,7 +14,68 @@ var toImageData= function(fakeImageData,frame){
         imagedata= {width:width, height:height};
         imagedata.data= new Uint8Array(width*height*4);
     }
-    imagedata.data.set(fakeImageData.data);
+    
+    // Convert (1:gray/2:gray+alpha/3:rgb) -> 4bit:rgba
+    // See: https://github.com/darkskyapp/pngparse#usage
+    var i= 0;
+    switch(fakeImageData.channels){
+        case 3:
+            var j= 0;
+            var rgb= fakeImageData.data;
+            while(rgb[j]){
+                imagedata.data.set(
+                    [
+                        rgb[j],
+                        rgb[j+1],
+                        rgb[j+2],
+                        255
+                    ],
+                    i
+                )
+                i+= 4;
+                j+= fakeImageData.channels;
+            }
+            break;
+        case 2:
+            var i= 0;
+            var grayA= fakeImageData.data;
+            while(grayA[i]){
+                imagedata.data.set(
+                    [
+                        grayA[j],
+                        grayA[j],
+                        grayA[j],
+                        grayA[j+1]
+                    ],
+                    i
+                )
+                i+= 4;
+                j+= fakeImageData.channels;
+            }
+            break;
+        case 1:
+            var i= 0;
+            var gray= fakeImageData.data;
+            while(gray[i]){
+                imagedata.data.set(
+                    [
+                        gray[j],
+                        gray[j],
+                        gray[j],
+                        255
+                    ],
+                    i
+                )
+                i+= 4;
+                j+= fakeImageData.channels;
+            }
+            break;
+
+        case 4:
+        default:
+            imagedata.data.set(fakeImageData.data);
+            break;
+    }
 
     if(frame){
         delete frame.dataParts
