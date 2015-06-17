@@ -18,62 +18,60 @@ var toImageData= function(fakeImageData,frame){
     // Convert (1:gray/2:gray+alpha/3:rgb) -> 4bit:rgba
     // See: https://github.com/darkskyapp/pngparse#usage
     var i= 0;
-    switch(fakeImageData.channels){
+    var channel= fakeImageData.channels
+    switch(channel){
         case 3:
             var j= 0;
             var rgb= fakeImageData.data;
             while(rgb[j]){
-                imagedata.data.set(
-                    [
-                        rgb[j],
-                        rgb[j+1],
-                        rgb[j+2],
-                        255
-                    ],
-                    i
-                )
+                imagedata.data[i+0]= rgb[j+0];
+                imagedata.data[i+1]= rgb[j+1];
+                imagedata.data[i+2]= rgb[j+2];
+                imagedata.data[i+3]= 255;
                 i+= 4;
-                j+= fakeImageData.channels;
+                j+= channel;
             }
             break;
         case 2:
-            var i= 0;
+            var j= 0;
             var grayA= fakeImageData.data;
             while(grayA[i]){
-                imagedata.data.set(
-                    [
-                        grayA[j],
-                        grayA[j],
-                        grayA[j],
-                        grayA[j+1]
-                    ],
-                    i
-                )
+                imagedata.data[i+0]= grayA[j+0];
+                imagedata.data[i+1]= grayA[j+0];
+                imagedata.data[i+2]= grayA[j+0];
+                imagedata.data[i+3]= grayA[j+1];
                 i+= 4;
-                j+= fakeImageData.channels;
+                j+= channel;
             }
             break;
         case 1:
-            var i= 0;
+            var j= 0;
             var gray= fakeImageData.data;
             while(gray[i]){
-                imagedata.data.set(
-                    [
-                        gray[j],
-                        gray[j],
-                        gray[j],
-                        255
-                    ],
-                    i
-                )
+                imagedata.data[i+0]= gray[j+0];
+                imagedata.data[i+1]= gray[j+0];
+                imagedata.data[i+2]= gray[j+0];
+                imagedata.data[i+3]= 255;
                 i+= 4;
-                j+= fakeImageData.channels;
+                j+= channel;
             }
             break;
 
         case 4:
         default:
-            imagedata.data.set(fakeImageData.data);
+            if(imagedata.data.set){
+                imagedata.data.set(fakeImageData.data);
+            }
+            else{
+                var rgba= fakeImageData.data;
+                while(rgba[i]){
+                    imagedata.data[i+0]= rgba[i+0];
+                    imagedata.data[i+1]= rgba[i+1];
+                    imagedata.data[i+2]= rgba[i+2];
+                    imagedata.data[i+3]= rgba[i+3];
+                    i+= 4;
+                }
+            }
             break;
     }
 
